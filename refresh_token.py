@@ -2,7 +2,7 @@ import requests
 import base64
 import json
 
-from variables import client_id, client_secret
+from variables import spotify_client_id, spotify_client_secret
 
 def save_tokens(token_info):
     with open('tokens.json', 'w') as token_file:
@@ -15,7 +15,7 @@ def load_tokens():
 
 def refresh_access_token(refresh_token):
     token_url = 'https://accounts.spotify.com/api/token'
-    auth_str = f"{client_id}:{client_secret}"
+    auth_str = f"{spotify_client_id}:{spotify_client_secret}"
     b64_auth_str = base64.b64encode(auth_str.encode()).decode()
     token_headers = {
         'Authorization': f'Basic {b64_auth_str}',

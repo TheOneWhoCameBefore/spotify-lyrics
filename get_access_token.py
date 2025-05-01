@@ -4,13 +4,13 @@ import json
 from urllib.parse import urlparse, parse_qs, urlencode
 
 # Replace these with your Spotify Client ID, Client Secret, and Redirect URI
-from variables import client_id, client_secret, redirect_uri
+from variables import spotify_client_id, spotify_client_secret, spotify_redirect_uri
 
 auth_url = 'https://accounts.spotify.com/authorize'
 auth_params = {
-    'client_id': client_id,
+    'client_id': spotify_client_id,
     'response_type': 'code',
-    'redirect_uri': redirect_uri,
+    'spotify_redirect_uri': spotify_redirect_uri,
     'scope': 'user-read-playback-state user-read-currently-playing'
 }
 print(f"Open this URL in your browser and authorize the app: {auth_url}?{urlencode(auth_params)}")
@@ -22,7 +22,7 @@ auth_code = parse_qs(parsed_url.query)['code'][0]
 
 # Exchange authorization code for access and refresh tokens
 token_url = 'https://accounts.spotify.com/api/token'
-auth_str = f"{client_id}:{client_secret}"
+auth_str = f"{spotify_client_id}:{spotify_client_secret}"
 b64_auth_str = base64.b64encode(auth_str.encode()).decode()
 token_headers = {
     'Authorization': f'Basic {b64_auth_str}',
@@ -31,7 +31,7 @@ token_headers = {
 token_data = {
     'grant_type': 'authorization_code',
     'code': auth_code,
-    'redirect_uri': redirect_uri
+    'spotify_redirect_uri': spotify_redirect_uri
 }
 token_response = requests.post(token_url, headers=token_headers, data=token_data)
 token_info = token_response.json()

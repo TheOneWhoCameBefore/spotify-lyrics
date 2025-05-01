@@ -14,5 +14,7 @@ for i in range(10):
 
     track = get_current_track(access_token, refresh_token)
     print(track['progress_ms'])
+    print(track['item']['duration_ms'])
+    print(track['item']['id'])
 
     time.sleep(5)
